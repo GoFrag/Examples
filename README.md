@@ -1,2 +1,2 @@
-# DSC_Examples
+# Examples
 Examples of PowerShell Desired State Configuration scripts, resources, etc.

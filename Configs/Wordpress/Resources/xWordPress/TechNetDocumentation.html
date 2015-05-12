@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<title>xWordPress</title></head>
+<body>
+<div id="longDesc"><span style="font-family: Calibri; font-size: medium;">
+<h1 style="font-family: Calibri Light; color: rgb(46, 116, 181); font-size: large;">Introduction</h1>
+<p>The<strong> xWordPress</strong> module is a part
+of the Windows PowerShell Desired State Configuration (DSC) Resource
+Kit, which is a collection of DSC Resources produced by the PowerShell
+Team. This module contains the <strong>xWordPressSite and
+xIisWordPressSite</strong> resources. This DSC Resource allows
+you to setup a WordPress Site.</p>
+<p><strong>All of the resources in the DSC Resource Kit are
+provided AS IS, and are not supported through any Microsoft standard
+support program or service. The ""x" in xWordPress stands for
+experimental</strong>, which means that these resources will be <strong>fix
+forward</strong> and monitored by the module owner(s).</p>
+<p>Please leave comments, feature requests, and bug reports in
+the Q &amp; A tab for this module.</p>
+<p>If you would like to modify <strong>xWordPress</strong>
+module, feel free. When modifying, please update the module name,
+resource friendly name, and MOF class name (instructions below). As
+specified in the license, you may copy or modify this resource as long
+as they are used on the Windows Platform.</p>
+<p>For more information about Windows PowerShell Desired State
+Configuration, check out the blog posts on the
+<a href="http://blogs.msdn.com/b/powershell/"><span style="color: rgb(0, 0, 255);">PowerShell Blog</span></a>
+(<a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color: rgb(0, 0, 255);">this</span></a>
+is a good starting point). There are also great community resources,
+such as <a href="http://powershell.org/wp/tag/dsc/"><span style="color: rgb(0, 0, 255);">PowerShell.org</span></a>,
+or
+<a href="http://www.powershellmagazine.com/tag/dsc/"><span style="color: rgb(0, 0, 255);">PowerShell Magazine</span></a>.
+For more information on the DSC Resource Kit, check out <a href="http://go.microsoft.com/fwlink/?LinkID=389546"><span style="color: rgb(0, 0, 255);">this blog post</span></a>.<br>
+</p></span>
+<h1 style="color: rgb(46, 116, 181); font-family: Calibri Light; font-size: large;">Installation</h1>
+<p>To install <strong>xWordPress</strong> module </p>
+<ul style="list-style-type: disc; direction: ltr;">
+<li>Unzip the content under
+$env:ProgramFiles\WindowsPowerShell\Modules folder</li>
+</ul>
+<p>To confirm installation:<br>
+</p>
+<ul style="list-style-type: disc; direction: ltr;">
+<li>Run <strong>Get-DSCResource</strong> to see
+that <strong>xWordPressSite</strong> is among the DSC
+Resources listed<br>
+</li>
+</ul>
+<h1 style="color: rgb(46, 116, 181); font-family: Calibri Light; font-size: large;">Requirements</h1>
+<p>This module requires the latest version of PowerShell (v4.0,
+which ships in Windows 8.1 or Windows Server 2012 R2). To easily use
+PowerShell 4.0 on older operating systems,
+<a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855"><span style="color: rgb(0, 0, 255);">install WMF 4.0</span></a>.
+Please read the installation instructions that are present on both the
+download page and the release notes for WMF 4.0.</p><h1 style="color: rgb(46, 116, 181); font-family: Calibri Light; font-size: large;">Description</h1>
+<p>The <strong>xWordPress </strong> module contains
+the <strong>xIisWordPressSite</strong> DSC Resource. This
+DSC Composite Configuration allows you to configure an IIS site with
+the file required to run WordPress and set the contents of the
+WordPress configuration file.</p>
+<p>The <strong>xWordPress </strong> module also
+contains the <strong>xWordPressSite</strong>
+DSC Resource. This DSC Resource allows you to configure
+a&nbsp;WordPress Site.</p>
+<h1 style="color: rgb(46, 116, 181); font-family: Calibri Light; font-size: large;">Details</h1>
+<p><strong>xIisWordPressSite</strong> resource has
+following properties:</p>
+<ul style="list-style-type: disc; direction: ltr;">
+<li> <strong>DestinationPath</strong>: <span style="position: absolute; left: 250px;">The path on the
+filesystem were the web site will be setup.</span>
+</li>
+<li> <strong>DownloadUri</strong>: <span style="position: absolute; left: 250px;">The uri to download
+the WordPress Zip file</span>
+</li>
+<li> <strong>PackageFolder</strong>: <span style="position: absolute; left: 250px;">The uri to download
+the WordPress Zip file computer name</span>
+</li>
+<li> <strong>PackageFolder</strong>:&nbsp;<span style="position: absolute; left: 250px;">The folder where
+the WordPress zip will be dowloaded. &nbsp;This path <span style="font-weight: bold;">MUST</span> already exist.</span>
+</li>
+<li> <strong>Configuration</strong>: <span style="position: absolute; left: 250px;">The&nbsp;contents
+of the WordPress configuration file (wp-config.php).</span>
+</li>
+</ul>
+<p><strong>xWordPressSite</strong> resource has
+following properties:</p>
+<ul style="list-style-type: disc; direction: ltr;">
+<li> <strong>Uri</strong>: <span style="position: absolute; left: 250px;">The WordPress Site
+URI..</span>
+</li>
+<li> <strong>Title</strong>:&nbsp;<span style="position: absolute; left: 250px;">The WordPress Site
+Default page title.</span>
+</li>
+<li> <strong>AdministratorCredential</strong>:&nbsp;<span style="position: absolute; left: 250px;">The username and
+password of the WordPress administrator to create when creating the
+site.</span>
+</li>
+<li> <strong>AdministratorEmail</strong>:&nbsp;<span style="position: absolute; left: 250px;">The email address
+of the WordPress administrator to create.</span>
+</li>
+<li> <strong>Ensure</strong>:&nbsp;<span style="position: absolute; left: 250px;">Currenly only
+Present is allowed.</span>
+</li>
+</ul>
+<h1 style="color: rgb(46, 116, 181); font-family: Calibri Light; font-size: large;"></h1>
+<h1 style="color: rgb(46, 116, 181); font-family: Calibri Light; font-size: large;">Renaming
+Requirements</h1>
+<p>When making changes to these resources, we suggest the
+following practice:</p>
+<ol style="list-style-type: decimal; direction: ltr;">
+<li> Update the following names by replacing MSFT with your
+company/community name and replacing the <strong>"x"</strong>
+with <strong>"c"</strong> (short for "Community") or
+another prefix of your choice:
+<ul>
+<li> <strong>Module name (ex: xWordPress</strong>
+becomes <strong>cWordPress</strong>)
+</li>
+<li> <strong>Resource folder (ex:
+MSFT_xWordPressSite</strong> becomes <strong>Contoso_cWordPressSite</strong>)
+</li>
+<li> <strong>Resource Name (ex: MSFT_xWordPressSite</strong>
+becomes <strong>Contoso_cWordPressSite</strong>)
+</li>
+<li> <strong>Resource Friendly Name (ex:
+xWordPressSite</strong> becomes <strong>cWordPressSite</strong>)
+</li>
+<li> <strong>MOF class name (ex:
+MSFT_xWordPressSite</strong> becomes <strong>Contoso_cWordPressSite</strong>)
+</li>
+<li> <strong>Filename for the
+&lt;resource&gt;.schema.mof (ex: MSFT_xWordPressSite</strong>.schema.mof
+becomes <strong>Contoso_cWordPressSite</strong>.schema.mof)
+</li>
+</ul>
+</li>
+<li> Update module and metadata information in the module
+manifest
+</li>
+<li> Update any configuration that use these resources
+</li>
+</ol>
+<p><em>We reserve resource and module names without
+prefixes ("x" or "c") for future use (e.g. "MSFT_WordPressSite"
+or "WordPressSite"). If the next version of Windows Server ships
+with a "WordPressSite" resource, we don't want to break any
+configurations that use any community modifications. Please keep a
+prefix such as "c" on all community modifications.</em></p>
+<h1 style="color: rgb(46, 116, 181); font-family: Calibri Light; font-size: large;">Versions</h1>
+<p>1.0.0.0</p>
+<ul style="list-style-type: disc; direction: ltr;">
+<li> Initial release with the following resources
+<ul style="list-style-type: circle;">
+<li> xWordPressSite</li>
+<li>xIisWordPressSite</li>
+</ul>
+</li>
+</ul>
+<h1 style="margin-bottom: 0pt; font-family: Calibri Light; color: rgb(46, 116, 181); font-size: large;">Example: Setup a WordPress Site on a single node</h1>
+This configuration will set a WordPress Site on a sigle node.<br>Note: this requires the following other modules: xWebAdministration, xPsDesiredStateConfiguration, xMySql, and xPhp (see <a href="#Example:_Install_xWordPress_Module_and">Example: Install xWordPress Module and the other required modules</a>).<br>&lt;Insert &nbsp;SingleNodeEndToEndWordPress.ps1/&gt;<br><br><h1 style="margin-bottom: 0pt; font-family: Calibri Light; color: rgb(46, 116, 181); font-size: large;"><a name="Example:_Install_xWordPress_Module_and"></a>Example: Install xWordPress Module and the other required modules</h1>Note: This require a version of WMF 5 see the <a href="https://msconfiggallery.cloudapp.net/">Powershell Resource Gallery</a> for more details
+
+
+
+
+
+<p class="MsoNormal" style="background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;; color: darkgreen;"># This Script installs the required modules for the WordPress
+Sample</span><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;;"><o:p></o:p></span><br><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;; color: darkgreen;"># It uses the PowerShell Resource Gallery, see
+https://msconfiggallery.cloudapp.net/</span><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;;"><o:p></o:p></span><br><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;; color: darkgreen;"># This requires WMF 5.<span style="">&nbsp;
+</span>If you don't have WMF 5, Please install the modules manually.</span><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;;"><o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;; color: blue;">Write-Host</span><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;;"> <span style="color: darkred;">"Installing
+required modules..."</span><o:p></o:p></span></p>
+
+
+
+
+
+
+
+
+
+
+
+<p class="MsoNormal" style="background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;; color: darkgreen;"></span><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;; color: blue;">Install-Module</span><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;;"> <span style="color: blueviolet;">xWebAdministration</span>
+<span style="color: navy;">-MinimumVersion</span> <span style="color: blueviolet;">1.3.2</span>
+<span style="color: navy;">-Force</span><o:p></o:p></span><br><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;; color: blue;">Install-Module</span><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;;"> <span style="color: blueviolet;">xPSDesiredStateConfiguration</span>
+<span style="color: navy;">-MinimumVersion</span> <span style="color: blueviolet;">3.0.1</span>
+<span style="color: navy;">-Force</span><o:p></o:p></span><br><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;; color: blue;">Install-Module</span><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;;"> <span style="color: blueviolet;">xMySql</span>
+<span style="color: navy;">-MinimumVersion</span> <span style="color: purple;">1.0</span>
+<span style="color: navy;">-Force</span><o:p></o:p></span><br><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;; color: blue;">Install-Module</span><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;;"> <span style="color: blueviolet;">xWordPress</span>
+<span style="color: navy;">-MinimumVersion</span> <span style="color: purple;">1.0</span>
+<span style="color: navy;">-Force</span><o:p></o:p></span><br><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;; color: blue;">Install-Module</span><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;;"> <span style="color: blueviolet;">xPhp</span>
+<span style="color: navy;">-MinimumVersion</span> <span style="color: blueviolet;">1.0.1</span>
+<span style="color: navy;">-Force</span><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 9pt; font-family: &quot;Lucida Console&quot;;"><span style="">&nbsp;</span><o:p></o:p></span></p>
+</div>
+</body></html>

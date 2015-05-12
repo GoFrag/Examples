@@ -1,0 +1,1 @@
+﻿Import-Certificate -FilePath "$PSScriptRoot\DSC Demo Root Authority.cer" -CertStoreLocation Cert:\LocalMachine\Root\ -Verbose
