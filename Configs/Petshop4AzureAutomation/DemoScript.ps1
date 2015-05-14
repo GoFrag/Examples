@@ -23,7 +23,7 @@ $myAutomationAccount | New-AzureAutomationModule -Name "xWebDeploy" -ContentLink
 
 #### Import configuration script
 $myConfig = $myAutomationAccount | Import-AzureAutomationDscConfiguration -SourcePath 'c:\examples\configs\petshop - OaaS\PetShopWebApp.ps1' -Description "Configuration to deploy petshop sample web application to one or two servers." -Published -force
-$myConfig = Get-AzureAutomationDscConfiguration  -ResourceGroupName "petshopdemo" -AutomationAccountName "petshop" -Name "PetShopWebApp"
+$myConfig = $myAutomationAccount | Get-AzureAutomationDscConfiguration  -Name "PetShopWebApp"
 
 #### Compile the configuration script to generate Node Configurations
 $myCompilationJob = $myConfig | Start-AzureAutomationDscCompilationJob -Parameters @{SQLUserName="OaaS";SQLPassword="pass@word1";SQLServerName="IgniteDemoSQL"}
