@@ -1,22 +1,35 @@
 ﻿#region Generate certificate to be used to encrypt passwords in Pull Server config
-$Certificate = ls Cert:\LocalMachine\My | ? {$_.Subject -eq "CN=$env:COMPUTERNAME" -and $_.PrivateKey.KeyExchangeAlgorithm} | Select -First 1 
+$Certificate = ls Cert:\LocalMachine\My | ? {$_.Subject -eq "CN=$env:COMPUTERNAME" -and $_.EnhancedKeyUsageList.ObjectID -eq '1.3.6.1.4.1.311.80.1'} | Select -First 1 
 if(!$Certificate)
 {
-    $Certificate = New-SelfSignedCertificate -Provider 'Microsoft RSA SChannel Cryptographic Provider' -DnsName $env:COMPUTERNAME -CertStoreLocation 'Cert:\LocalMachine\My'
+    $Certificate = New-SelfSignedCertificate -KeyUsage DataEncipherment -Type DocumentEncryptionCert -DnsName $env:COMPUTERNAME -CertStoreLocation 'Cert:\LocalMachine\My'
 }
 
 #endregion Generate certificate to be used to encrypt passwords in Pull Server config
+
+[DscLocalConfigurationManager()]
+Configuration Meta
+{
+    Settings
+    {
+        #Thumbprint of Certificate to be used to decrypt credentails within configuations on this node
+        CertificateID = $Certificate.Thumbprint
+    }
+}
+
+Meta -OutputPath c:\configs\MOF\
 
 $ConfigData = @{
     AllNodes = @(
         @{
             NodeName = "localhost"
+            #Thumprint of certificate to be used to encrypt credentials within a configuration
             CertificateID = $Certificate.Thumbprint
             }
     )
 }
 
-$SSLCertFilePath = 'C:\Git\Examples\Configs\PSSummitEU2015\my_ssl.pfx'
+$SSLCertFilePath = 'C:\Configs\my_ssl.pfx'
 
 Configuration V2PullServer
 {
