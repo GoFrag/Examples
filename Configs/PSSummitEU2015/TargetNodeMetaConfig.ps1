@@ -1,0 +1,33 @@
+﻿
+
+[DscLocalConfigurationManager()]
+Configuration MetaConfig
+{
+    Settings
+    {
+        RefreshMode = 'Pull'
+        ConfigurationMode = 'ApplyAndAutoCorrect'
+        ActionAfterReboot = 'ContinueConfiguration'
+        RebootNodeIfNeeded = $true
+    }
+
+    ConfigurationRepositoryWeb V2PullServer
+    {
+        ServerURL = 'https://win-c274nvjnnpn/PSDSCPullServer.svc/'
+        RegistrationKey = '9a28a925-18d9-4689-a591-5a0c53ab73b2'
+    }
+
+    ResourceRepositoryWeb V2PullServer
+    {
+        ServerURL = 'https://win-c274nvjnnpn/PSDSCPullServer.svc/'
+        RegistrationKey = '9a28a925-18d9-4689-a591-5a0c53ab73b2'
+    }
+
+    ReportServerWeb V2PullServer
+    {
+        ServerURL = 'https://win-c274nvjnnpn/PSDSCPullServer.svc/'
+        RegistrationKey = '9a28a925-18d9-4689-a591-5a0c53ab73b2'
+    }
+}
+
+MetaConfig -OutputPath C:\Configs\MOF\TargetNodes

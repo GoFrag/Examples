@@ -1,66 +1,36 @@
-﻿#region Generate certificate to be used to encrypt passwords in Pull Server config
-$Certificate = ls Cert:\LocalMachine\My | ? {$_.Subject -eq "CN=$env:COMPUTERNAME" -and $_.EnhancedKeyUsageList.ObjectID -eq '1.3.6.1.4.1.311.80.1'} | Select -First 1 
-if(!$Certificate)
-{
-    $Certificate = New-SelfSignedCertificate -KeyUsage DataEncipherment -Type DocumentEncryptionCert -DnsName $env:COMPUTERNAME -CertStoreLocation 'Cert:\LocalMachine\My'
-}
-
-#endregion Generate certificate to be used to encrypt passwords in Pull Server config
-
-[DscLocalConfigurationManager()]
-Configuration Meta
-{
-    Settings
-    {
-        #Thumbprint of Certificate to be used to decrypt credentails within configuations on this node
-        CertificateID = $Certificate.Thumbprint
-    }
-}
-
-Meta -OutputPath c:\configs\MOF\
-
-$ConfigData = @{
-    AllNodes = @(
-        @{
-            NodeName = "localhost"
-            #Thumprint of certificate to be used to encrypt credentials within a configuration
-            CertificateID = $Certificate.Thumbprint
-            }
-    )
-}
+﻿
 
 $SSLCertFilePath = 'C:\Configs\my_ssl.pfx'
+$SSLThumbprint = (Get-PfxCertificate -FilePath $SSLCertFilePath).Thumbprint
+$SSLCert = dir "Cert:\LocalMachine\My\$SSLThumbprint"
+
+if(!$SSLCert)
+{
+    $SSLCertPassword = Read-Host -Prompt 'Enter Password for SSL Certificate:' -AsSecureString
+
+    #Import SSL cert for use by website
+    Import-PfxCertificate -FilePath $SSLCertFilePath -CertStoreLocation 'cert:\LocalMachine\My' -Password $SSLCertPassword
+
+    #Import SSL cert into trusted root
+    Import-PfxCertificate -FilePath $SSLCertFilePath -CertStoreLocation 'cert:\LocalMachine\root' -Password $SSLCertPassword
+}
 
 Configuration V2PullServer
 {
     param(
-            [Parameter(Mandatory)]
-            [ValidateNotNullOrEmpty()] 
-            [pscredential] $SSLCertificatePassword,
-
             [Parameter(Mandatory)]
             [ValidateNotNullOrEmpty()]
             [string] $SSLCertThumbprint
     )
 
     Import-DscResource -ModuleName xPsDesiredStateConfiguration
-    Import-DscResource -ModuleName xCertificate
+
     node localhost
     {
         WindowsFeature DSCServiceFeature
         {
             Ensure = "Present"
             Name   = "DSC-Service"            
-        }
-
-        #Resource to install SSL Certificate
-        xPfxCertificate PullServerSSCert
-        {
-            Ensure = 'Present'
-            FilePath = $SSLCertFilePath
-            CertStoreLocation = 'Cert:\LocalMachine\My'
-            Password = $SSLCertificatePassword
-            Exportable = $false
         }
 
         xDscWebService PSDSCPullServer
@@ -74,12 +44,17 @@ Configuration V2PullServer
             DependsOn                    = "[WindowsFeature]DSCServiceFeature" 
             AcceptSelfSignedCertificates = $true
         }
+
+        File RegistrationKeyFile
+        {
+            Ensure ='Present'
+            Type = 'File'
+            DestinationPath = "$env:ProgramFiles\WindowsPowerShell\DscService\RegistrationKeys.txt"
+            Contents = '9a28a925-18d9-4689-a591-5a0c53ab73b2'
+        }
     }
 }
 
-$SSLcred = Get-Credential -Message 'Enter Password for pfx certificate: ' -UserName 'None'
-$SSLThumbprint = (Get-PfxCertificate -FilePath $SSLCertFilePath).Thumbprint
-
-V2PullServer -SSLCertificatePassword $SSLcred -SSLCertThumbprint $SSLThumbprint -ConfigurationData $ConfigData -OutputPath c:\Configs\MOF 
+V2PullServer -SSLCertThumbprint $SSLThumbprint -OutputPath c:\Configs\MOF 
 
 #Start-DscConfiguration -Path C:\Configs\MOF\ -Wait -Verbose
