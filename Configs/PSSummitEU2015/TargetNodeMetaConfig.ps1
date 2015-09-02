@@ -1,5 +1,4 @@
 ﻿
-
 [DscLocalConfigurationManager()]
 Configuration MetaConfig
 {
@@ -30,4 +29,4 @@ Configuration MetaConfig
     }
 }
 
-MetaConfig -OutputPath C:\Configs\MOF\TargetNodes
+MetaConfig -OutputPath C:\Demos\PSSummitEurope2015\MOF\TargetNodes

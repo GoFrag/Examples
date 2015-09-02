@@ -40,10 +40,10 @@ Thumbs.db
 #Directories with non-source files#
 ###################################
 /**/packages
-
+Configs/PSSummitEU2015/modules
 
 #Certificate related files#
 ###########################
-*.pfx
+#*.pfx
 *.pvk
-*.cer
+#*.cer
