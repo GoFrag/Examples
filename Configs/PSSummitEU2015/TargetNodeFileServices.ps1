@@ -1,10 +1,11 @@
 ﻿
 Configuration Basic
 {
+    Import-DscResource -ModuleName xSmbShare
+    Import-DscResource -ModuleName xWebAdministration
+
     Node 'Basic.FileServer'
     {
-        Import-DscResource -ModuleName xSmbShare
-
         WindowsFeature FileAndISCSI
         {
             Ensure = 'Present'
@@ -15,14 +16,14 @@ Configuration Basic
         {
             Ensure            = 'Present'
             Type              = 'Directory'
-            DestinationPath   = '%SystemDrive%\Shares\Software'
+            DestinationPath   = 'c:\Shares\Software'
         }
 
         xSmbShare Software
         {
             Ensure = 'Present'
             Name = 'Software'
-            Path = '%SystemDrive%\Shares\Software'
+            Path = 'c:\Shares\Software'
             Description = 'Corporate Software'
             ReadAccess = "Employees"
             ChangeAccess = "Managers"
@@ -32,14 +33,14 @@ Configuration Basic
         {
             Ensure            = 'Present'
             Type              = 'Directory'
-            DestinationPath   = '%SystemDrive%\Shares\Users'
+            DestinationPath   = 'c:\Shares\Users'
         }
 
         xSmbShare Users
         {
             Ensure = 'Present'
             Name = 'Users'
-            Path = '%systemDrives%\Shares\Users'
+            Path = 'c:\Shares\Users'
             Description = 'Employee home directories.'
             ReadAccess = 'Employees'
             FolderEnumerationMode = 'AccessBased'
@@ -49,15 +50,15 @@ Configuration Basic
         {
             Ensure            = 'Present'
             Type              = 'Directory'
-            DestinationPath   = '%SystemDrive%\Shares\Finance'
+            DestinationPath   = 'c:\Shares\Finance'
         }
 
         xSmbShare Finance
         {
             Ensure = 'Present'
             Name = 'Finance'
-            Path = '%systemDrives%\Shares\Users'
-            Description = 'Employee home directories.'
+            Path = 'c:\Shares\Finance'
+            Description = 'Finance department documents.'
             NoAccess = 'Employees'
             ChangeAccess = 'Finance'
             EncryptData = $true
@@ -66,8 +67,6 @@ Configuration Basic
 
     Node 'Basic.WebServer'
     {
-        Import-DscResource -ModuleName xWebAdministration
-
         WindowsFeature WebServer
         {
             Ensure = 'Present'

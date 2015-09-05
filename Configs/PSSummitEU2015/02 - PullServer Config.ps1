@@ -38,6 +38,8 @@ Configuration V2PullServer
         }
 
         #Install WebApp for managing Configurations / resources
+        #set-webconfiguration "/system.applicationHost/applicationPools/add[@name=$sitename]/@enable32BitAppOnWin64" -Value "true"
+        #set-itemProperty IIS:\apppools\$sitename -name "enable32BitAppOnWin64" -Value "true"
     }
 }
 
