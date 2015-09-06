@@ -1,5 +1,11 @@
 ﻿$cred = Get-Credential
 
+#Prep local machine
+    Write-Host "Starting configuration of Local Machine."
+    New-NetIPAddress -IPAddress '10.0.0.1' -PrefixLength 24 -InterfaceAlias 'vEthernet (DemoNet)' -AddressFamily IPv4
+    "`r`n10.0.0.10`tcorp.fabricam.com" | Out-File -FilePath 'c:\windows\system32\drivers\etc\hosts' -Encoding ascii -Append
+    Write-Host "Completed: Local Machine setup"
+
 #Prep Pull Server
     Write-Host "Starting configuration of Pull Server."
     #Copy and install private SSL certificate

@@ -1,10 +1,10 @@
-﻿
-Configuration Basic
+﻿Configuration Basic
 {
     Import-DscResource -ModuleName xSmbShare
     Import-DscResource -ModuleName xWebAdministration
 
-    Node 'Basic.FileServer'
+    #File Server Config
+    Node $AllNodes.Where($_.Role -eq 'FileServer').NodeName
     {
         WindowsFeature FileAndISCSI
         {
@@ -65,7 +65,8 @@ Configuration Basic
         }
     }
 
-    Node 'Basic.WebServer'
+    # WebServer config
+    Node $AllNodes.Where($_.Role -eq 'WebFrontEndServer').NodeName
     {
         WindowsFeature WebServer
         {
@@ -103,4 +104,4 @@ Configuration Basic
     }
 }
 
-Basic -OutputPath C:\Demos\PSSummitEurope2015\MOF\TargetNodes
+Basic-ConfigurationData '.\v1 ConfigData.psd1' -OutputPath 'C:\Demos\PSSummitEurope2015\MOF\V1' -Verbose

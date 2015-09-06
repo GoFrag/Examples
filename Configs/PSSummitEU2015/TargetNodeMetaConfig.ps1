@@ -13,6 +13,7 @@ Configuration MetaConfig
     ConfigurationRepositoryWeb V2PullServer
     {
         ServerURL = 'https://corp.fabricam.com/PSDSCPullServer.svc/'
+        ConfigurationName = 'Basic.FileServer'
         RegistrationKey = '9a28a925-18d9-4689-a591-5a0c53ab73b2'
     }
 
