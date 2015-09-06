@@ -13,4 +13,4 @@ Configuration Meta
     }
 }
 
-Meta -ConfigurationData '.\v1 ConfigData.psd1' -OutputPath 'C:\Demos\PSSummitEurope2015\MOF\V1' -Verbose
+Meta -ConfigurationData "$PSScriptRoot\TargetNodeConfigData.psd1" -OutputPath 'C:\Demos\PSSummitEurope2015\MOF\V1' -Verbose

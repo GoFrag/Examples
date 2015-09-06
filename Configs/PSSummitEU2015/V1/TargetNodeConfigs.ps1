@@ -104,4 +104,4 @@
     }
 }
 
-Basic-ConfigurationData '.\v1 ConfigData.psd1' -OutputPath 'C:\Demos\PSSummitEurope2015\MOF\V1' -Verbose
+Basic -ConfigurationData "$PSScriptRoot\TargetNodeConfigData.psd1" -OutputPath 'C:\Demos\PSSummitEurope2015\MOF\V1' -Verbose
