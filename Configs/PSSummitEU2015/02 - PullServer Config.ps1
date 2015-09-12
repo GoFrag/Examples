@@ -8,6 +8,7 @@ Configuration V2PullServer
     )
 
     Import-DscResource -ModuleName xPsDesiredStateConfiguration
+    Import-DscResource -ModuleName xWebAdministration
 
     node localhost
     {
@@ -38,12 +39,48 @@ Configuration V2PullServer
         }
 
         #Install WebApp for managing Configurations / resources
-        #set-webconfiguration "/system.applicationHost/applicationPools/add[@name=$sitename]/@enable32BitAppOnWin64" -Value "true"
-        #set-itemProperty IIS:\apppools\$sitename -name "enable32BitAppOnWin64" -Value "true"
+        
+        
+        File AdminSite
+        {
+            Ensure = 'Present'
+            Type = 'Directory'
+            DestinationPath = 'c:\inetpub\DscAdmin'
+        }
+    
+        xRemoteFile SiteContents
+        {
+            Uri = 'http://PSDemo45/Assets/site.zip'
+            DestinationPath = 'c:\inetpub\temp\site.zip'
+        }
+
+        xArchive SiteContents
+        {
+            Path = 'c:\inetpub\temp\site.zip'
+            Destination = 'c:\inetpub\DscAdmin\'
+            DestinationType = 'Directory'
+        }
+
+        xWebAppPool PSWS
+        {
+             Ensure = 'Present'
+             Name = 'PSWS'
+             State = 'Started'
+             Enable32BitAppOnWin64 = $true
+        }
+
+        xWebApplication DscAdmin
+        {
+            Ensure = 'Present'
+            Name = 'Admin'
+            Website = 'Default Web Site'
+            PhysicalPath = 'c:\Inetpub\DSCAdmin'
+            WebAppPool = 'PSWS'
+        }
     }
 }
 
 $SSLCertFilePath = "$PSScriptRoot\fabricam_ssl.pfx"
 $SSLThumbprint = (Get-PfxCertificate -FilePath $SSLCertFilePath).Thumbprint
-
+              
 V2PullServer -SSLCertThumbprint $SSLThumbprint -OutputPath C:\Demos\PSSummitEurope2015\MOF

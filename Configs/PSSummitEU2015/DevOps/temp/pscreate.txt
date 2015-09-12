@@ -1,0 +1,11 @@
+﻿##
+## Run command
+##
+
+$rs = [runspacefactory]::CreateRunspace($host)
+$rs.Open()
+$rs | Enable-RunspaceDebug -BreakAll
+$ps = [powershell]::Create()
+$ps.Runspace = $rs
+$ps.AddScript('C:\Scripts\TestScript1.ps1')
+$async = $ps.BeginInvoke()

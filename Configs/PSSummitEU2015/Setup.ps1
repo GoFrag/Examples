@@ -1,4 +1,4 @@
-﻿$cred = Get-Credential
+﻿$cred = Import-Clixml -Path C:\demos\PSSummitEurope2015\Admin.xml
 
 #Prep local machine
     Write-Host "Starting configuration of Local Machine."
@@ -8,10 +8,15 @@
 
 #Prep Pull Server
     Write-Host "Starting configuration of Pull Server."
+    #Copy required module
+    dir $PSScriptRoot\Modules\ -Recurse -File | %{Copy-VMFile -Name Pull -SourcePath $_.FullName -DestinationPath $_.FullName -CreateFullPath -FileSource Host -Force}
+    #dir $PSScriptRoot\site\ -Recurse -File | %{Copy-VMFile -Name Pull -SourcePath $_.FullName -DestinationPath $_.FullName -CreateFullPath -FileSource Host -Force}
+    #Invoke-Command -VMName Pull -ScriptBlock{copy C:\Git\Examples\Configs\PSSummitEU2015\Site\* 'C:\inetpub\DscAdmin' -Recurse } -Credential $cred
+    Invoke-Command -VMName Pull -ScriptBlock{copy C:\Git\Examples\Configs\PSSummitEU2015\Modules\* 'C:\Program Files\WindowsPowerShell\Modules' -Recurse; del c:\git -Recurse} -Credential $cred #Use PowerShell direct to run a script on a VM.
+
+    
     #Copy and install private SSL certificate
     dir $PSScriptRoot\fabricam_ssl.pfx | Copy-VMFile -Name Pull -DestinationPath 'c:\temp\fabricam_ssl.pfx' -CreateFullPath -FileSource Host -Force
-    dir $PSScriptRoot\Modules\ -Recurse -File | %{Copy-VMFile -Name Pull -SourcePath $_.FullName -DestinationPath $_.FullName -CreateFullPath -FileSource Host -Force}
-    Invoke-Command -VMName Pull -ScriptBlock{copy C:\Git\Examples\Configs\PSSummitEU2015\Modules\* 'C:\Program Files\WindowsPowerShell\Modules' -Recurse; del c:\git -Recurse} -Credential $cred #Use PowerShell direct to run a script on a VM.
     Invoke-Command -VMName Pull -ScriptBlock {$Password = Read-Host -Prompt 'Enter Password for SSL Certificate:' -AsSecureString;Import-PfxCertificate -Password $Password -CertStoreLocation 'Cert:\LocalMachine\My' -FilePath 'c:\temp\fabricam_ssl.pfx'} -Credential $cred
     Invoke-Command -VMName Pull -ScriptBlock {del 'c:\temp' -Recurse} -Credential $cred
     Write-Host "   Completed: copied and installed SSL Certificate"
@@ -53,26 +58,10 @@
     Invoke-Command -VMName Server -ScriptBlock {"`r`n10.0.0.10`tcorp.fabricam.com" | Out-File -FilePath 'c:\windows\system32\drivers\etc\hosts' -Encoding ascii -Append} -Credential $cred
     Write-Host "   Completed: set hosts file"
 
-    #Add Demo user
+    #Add Demo users
     Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Demo");$user.SetPassword("Sd2-mmtp");$user.UserFlags = 64 + 65536;$user.SetInfo();$Admins = [ADSI]"WinNT://$env:computername/Administrators,group";$Admins.Add("WinNT://$env:computername/Demo,user");} -Credential $cred
+    Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Employees");$user.SetPassword("Sd2-mmtp");$user.UserFlags = 64 + 65536;$user.SetInfo();} -Credential $cred
+    Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Managers");$user.SetPassword("Sd2-mmtp");$user.UserFlags = 64 + 65536;$user.SetInfo();} -Credential $cred
+    #Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Finance");$user.SetPassword("Sd2-mmtp");$user.UserFlags = 64 + 65536;$user.SetInfo();} -Credential $cred
     Write-Host "   Completed: created Demo user"
     Write-Host "Completed: Target server setup"
-
-    <#
-    $SSLCertFilePath = 'C:\Configs\fabricam_ssl.pfx'
-    $SSLThumbprint = (Get-PfxCertificate -FilePath $SSLCertFilePath).Thumbprint
-    $SSLCert = dir "Cert:\LocalMachine\My\$SSLThumbprint"
-
-    #"`r`n10.0.0.10`tcorp.fabricam.com" | Out-File -FilePath 'c:\windows\system32\drivers\etc\hosts' -Encoding ascii -Append
-
-    if(!$SSLCert)
-    {
-        $SSLCertPassword = Read-Host -Prompt 'Enter Password for SSL Certificate:' -AsSecureString
-
-        #Import SSL cert for use by website
-        Import-PfxCertificate -FilePath $SSLCertFilePath -CertStoreLocation 'cert:\LocalMachine\My' -Password $SSLCertPassword
-
-        #Import SSL cert into trusted root
-        Import-PfxCertificate -FilePath $SSLCertFilePath -CertStoreLocation 'cert:\LocalMachine\root' -Password $SSLCertPassword
-    }
-    #>

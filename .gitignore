@@ -6,6 +6,7 @@
 *.exe
 *.o
 *.so
+*.mof
  
 # Packages #
 ############
@@ -41,6 +42,7 @@ Thumbs.db
 ###################################
 /**/packages
 Configs/PSSummitEU2015/modules
+Configs/PSSummitEU2015/DevOps/Website/xWebAdministration
 
 #Certificate related files#
 ###########################
