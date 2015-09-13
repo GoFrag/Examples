@@ -1,8 +1,9 @@
-﻿
+﻿#region prep
 # static code analysis 
 Install-Module PSScriptAnalyzer
 #GitHub https://github.com/PowerShell/PSScriptAnalyzer/releases
-cd C:\Git\Examples\Configs\PSSummitEU2015\DevOps>
+cd C:\Git\Examples\Configs\PSSummitEU2015\DevOps\Website
+#endregion
 
 #Get list of rules that will be analysed
 Get-ScriptAnalyzerRule
@@ -13,7 +14,6 @@ Get-ScriptAnalyzerRule -CustomizedRulePath C:\Git\nScriptAnalyzerRules\nScriptAn
 #In-line Suppress ??
 #[Diagnostics.CodeAnalysis.SuppressMessageAttribute("*")]
 #Script or Function level
-
 
 #Builtin Rules
 Invoke-ScriptAnalyzer -Path .\ -Recurse
@@ -31,13 +31,13 @@ Invoke-ScriptAnalyzer -Path .\ -Recurse -Severity Error, Warning
 
 #Profile
 $myProfile = @{
-    Severity='Warning'
+    Severity='Warning';
     IncludeRules=@('PSAvoidUsingCmdletAliases',
                     'PSAvoidUsingPositionalParameters',
-                    'PSAvoidUsingInternalURLs'
+                    'PSAvoidUsingInternalURLs',
                     'PSAvoidUninitializedVariable')
     ExcludeRules=@('PSAvoidUsingCmdletAliases'
                    'PSAvoidUninitializedVariable')
 }
 
-Invoke-ScriptAnalyzer -path MyScript.ps1 -Profile $myProfile
+Invoke-ScriptAnalyzer -path .\WebsiteConfig.ps1 -Profile $myProfile
