@@ -1,31 +1,42 @@
-﻿cd C:\Git\Examples\Configs\PSSummitEU2015\debugging
+﻿#region prep
+cd C:\DemoScripts\Debugging
+$cred = Import-Clixml -Path C:\DemoScripts\PullServer\Admin.xml
+#endregion prep
 
 # Break into running script
-# '.\01 - LongRunningScript.ps1'
+# '.\LongRunning.ps1'
 
 #Edit and debug remote script
-Enter-PSSession PSDemo45
-cd C:\DemoScripts\
-PSEdit .\MyScript.ps1
+
+Enter-PSSession corp.fabricam.com -Credential $cred
+cd C:\Configs\
+PSEdit .\LongRunning.ps1
 exit
 
 #Debug job
 # job needs to reference full path since job creates new session which will have default path
-Start-Job {& 'C:\Git\Examples\Configs\PSSummitEU2015\DevOps\01 - LongRunningScript.ps1'} -Name "Debug"
+Start-Job {& 'C:\DemoScripts\Debugging\LongRunning.ps1'} -Name "Debug"
 Get-Job
 Debug-job -Name Debug
 Detach
 Quit
 
 #Debug process / runspace
-#Launch c:\MyScript.ps1 in PS console
+#Launch c:\DemoScripts\MyScript.ps1 in PS console
 $ProcessId = (Get-PSHostProcessInfo | where {$_.ProcessName -eq 'Powershell'}).ProcessId
 Enter-PSHostProcess -Id $ProcessId
 $RunspaceId = (Get-Runspace | where {$_.Name -notcontains "RemoteHost"}).Id
 Debug-Runspace -Id $RunspaceId
 
 #Debug DSC Configuration
-Enter-PSSession corp.fabricam.com
-Enable-DscDebug -BreakAll
-& 'c:\configs\03 - Config.ps1'
+#Run from PS console
+start-process powershell.exe -ArgumentList '-noexit', @' 
+                                                -command 
+                                                $s = new-PSSession corp.fabricam.com -Credential Administrator; 
+                                                icm $s {Enable-DscDebug -BreakAll
+                                                & 'c:\configs\Config.ps1'}
+'@
+
+Enter-PSSession corp.fabricam.com -Credential $cred
+# enter commands per Warning messages
 
