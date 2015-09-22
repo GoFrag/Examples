@@ -1,7 +1,7 @@
 ﻿####################################################################
 # Unit tests for WebsiteConfig
 #
-#Unit tests content of DSC configuration as well as the MOF output.
+# Unit tests content of DSC configuration as well as the MOF output.
 ####################################################################
 
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -59,12 +59,6 @@ Describe "Website Configuration" {
         It "Should be a valid DSC MOF document"{
             Website -OutputPath $OutputPath -SourcePath "\\Server1\Configs\"
             mofcomp -check "$OutputPath\Website.FourthCoffee.mof" | Select-String "compiler returned error" | Should BeNullOrEmpty
-            <#
-            $paths = @("$env:ProgramFiles:\WindowsPowerShell\Modules","$env:SystemRoot:\system32\WindowsPowerShell\v1.0\Modules")
-            [Microsoft.PowerShell.DesiredStateConfiguration.Internal.DscClassCache]::Initialize($null,$paths)
-            $mof = Get-Content "$OutputPath\Website.FourthCoffee.mof"
-            [Microsoft.PowerShell.DesiredStateConfiguration.Internal.DscClassCache]::ValidateInstanceText($mof)
-            #>
         }
 
         It "Should generate a new version (2.0) mof document." {

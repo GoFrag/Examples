@@ -21,12 +21,12 @@
 
         xSmbShare Software
         {
-            Ensure = 'Present'
-            Name = 'Software'
-            Path = 'c:\Shares\Software'
-            Description = 'Corporate Software'
-            ReadAccess = "Employees"
-            ChangeAccess = "Managers"
+            Ensure          = 'Present'
+            Name            = 'Software'
+            Path            = 'c:\Shares\Software'
+            Description     = 'Corporate Software'
+            ReadAccess      = "Employees"
+            ChangeAccess    = "Managers"
         }
 
         File Users
@@ -38,11 +38,11 @@
 
         xSmbShare Users
         {
-            Ensure = 'Present'
-            Name = 'Users'
-            Path = 'c:\Shares\Users'
-            Description = 'Employee home directories.'
-            ReadAccess = 'Employees'
+            Ensure                = 'Present'
+            Name                  = 'Users'
+            Path                  = 'c:\Shares\Users'
+            Description           = 'Employee home directories.'
+            ReadAccess            = 'Employees'
             FolderEnumerationMode = 'AccessBased'
         }
 
@@ -55,13 +55,13 @@
 
         xSmbShare Finance
         {
-            Ensure = 'Present'
-            Name = 'Finance'
-            Path = 'c:\Shares\Finance'
-            Description = 'Finance department documents.'
-            NoAccess = 'Employees'
-            ChangeAccess = 'Finance'
-            EncryptData = $true
+            Ensure        = 'Present'
+            Name          = 'Finance'
+            Path          = 'c:\Shares\Finance'
+            Description   = 'Finance department documents.'
+            NoAccess      = 'Employees'
+            ChangeAccess  = 'Finance'
+            EncryptData   = $true
         }
     }
    

@@ -5,10 +5,10 @@ Configuration Meta
     {
         LocalConfigurationManager
         {
-            RefreshMode = 'Pull'
-            ConfigurationID = $Node.ConfigurationID
-            DownloadManagerName = 'WebDownloadManager'
-            DownloadManagerCustomData = @{ServerUrl='http://corp.fabricam.com/PSDSCPullServer.svc';AllowUnsecureConnection = "True"}
+            RefreshMode                = 'Pull'
+            ConfigurationID            = $Node.ConfigurationID
+            DownloadManagerName        = 'WebDownloadManager'
+            DownloadManagerCustomData  = @{ServerUrl='http://corp.fabricam.com/PSDSCPullServer.svc';AllowUnsecureConnection = "True"}
         }
     }
 }

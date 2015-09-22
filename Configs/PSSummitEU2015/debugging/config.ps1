@@ -4,15 +4,15 @@ Configuration Simple
     Environment AppSetting
     {
         Ensure = 'Present'
-        Name = 'SpellChecking'
-        Value = 'Enabled'
+        Name   = 'SpellChecking'
+        Value  = 'Enabled'
     }
 
     Service WinRM
     {
         Ensure = 'Present'
-        State = 'Running'
-        Name = 'WinRM'
+        State  = 'Running'
+        Name   = 'WinRM'
     }
 }
 

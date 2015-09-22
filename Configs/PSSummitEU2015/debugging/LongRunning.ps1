@@ -2,22 +2,6 @@
 ## Long running script
 ##
 
-<#
-function ExtraProcessing
-{
-    param (
-        $Process
-    )
-
-    if ($Process.ProcessName -like "wsm*")
-    {
-        return $true
-    }
-
-    return $false
-}
-#>
-
 function Get-ProcessInfo
 {
     param (

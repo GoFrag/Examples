@@ -31,10 +31,10 @@ Configuration V2PullServer
 
         File RegistrationKeyFile
         {
-            Ensure ='Present'
-            Type = 'File'
+            Ensure          ='Present'
+            Type            = 'File'
             DestinationPath = "$env:ProgramFiles\WindowsPowerShell\DscService\RegistrationKeys.txt"
-            Contents = '9a28a925-18d9-4689-a591-5a0c53ab73b2'
+            Contents        = '9a28a925-18d9-4689-a591-5a0c53ab73b2'
         }
     }
 }

@@ -8,8 +8,8 @@ Configuration Basic
     {
         WindowsFeature FileAndISCSI
         {
-            Ensure = 'Present'
-            Name = 'File-Services'
+            Ensure  = 'Present'
+            Name    = 'File-Services'
         }
 
         File Software
@@ -21,12 +21,12 @@ Configuration Basic
 
         xSmbShare Software
         {
-            Ensure = 'Present'
-            Name = 'Software'
-            Path = 'c:\Shares\Software'
-            Description = 'Corporate Software'
-            ReadAccess = "Employees"
-            ChangeAccess = "Managers"
+            Ensure        = 'Present'
+            Name          = 'Software'
+            Path          = 'c:\Shares\Software'
+            Description   = 'Corporate Software'
+            ReadAccess    = "Employees"
+            ChangeAccess  = "Managers"
         }
 
         File Users
@@ -38,12 +38,12 @@ Configuration Basic
 
         xSmbShare Users
         {
-            Ensure = 'Present'
-            Name = 'Users'
-            Path = 'c:\Shares\Users'
-            Description = 'Employee home directories.'
-            ReadAccess = 'Employees'
-            FolderEnumerationMode = 'AccessBased'
+            Ensure                 = 'Present'
+            Name                   = 'Users'
+            Path                   = 'c:\Shares\Users'
+            Description            = 'Employee home directories.'
+            ReadAccess             = 'Employees'
+            FolderEnumerationMode  = 'AccessBased'
         }
 
         File Finance
@@ -55,13 +55,13 @@ Configuration Basic
 
         xSmbShare Finance
         {
-            Ensure = 'Present'
-            Name = 'Finance'
-            Path = 'c:\Shares\Finance'
-            Description = 'Finance department documents.'
-            NoAccess = 'Employees'
-            ChangeAccess = 'Finance'
-            EncryptData = $true
+            Ensure        = 'Present'
+            Name          = 'Finance'
+            Path          = 'c:\Shares\Finance'
+            Description   = 'Finance department documents.'
+            NoAccess      = 'Employees'
+            ChangeAccess  = 'Finance'
+            EncryptData   = $true
         }
     }
 
@@ -69,36 +69,36 @@ Configuration Basic
     {
         WindowsFeature WebServer
         {
-            Ensure = 'Present'
-            Name = 'Web-Server'
+            Ensure   = 'Present'
+            Name     = 'Web-Server'
         }
 
         File PublicSite
         {
-            Ensure = 'Present'
-            Type = 'Directory'
-            DestinationPath = 'c:\inetpub\fabricam'
+            Ensure           = 'Present'
+            Type             = 'Directory'
+            DestinationPath  = 'c:\inetpub\fabricam'
         }
 
         xWebAppPool FabricamPublic
         {
-            Ensure = 'Present'
-            Name = 'Public'
-            State = 'Started'
+            Ensure   = 'Present'
+            Name     = 'Public'
+            State     = 'Started'
         }
 
         xWebsite FabricamPublic
         {
-            Ensure = 'Present'
-            Name = 'Fabricam.com'
-            PhysicalPath = 'c:\inetpub\fabricam'
-            State = 'Started'
+            Ensure          = 'Present'
+            Name            = 'Fabricam.com'
+            PhysicalPath    = 'c:\inetpub\fabricam'
+            State           = 'Started'
             ApplicationPool = 'Public'
-            BindingInfo = MSFT_xWebBindingInformation
-                             {
-                               Protocol = "HTTP"
-                               Port = 8080
-                             }
+            BindingInfo     = MSFT_xWebBindingInformation
+                              {
+                                 Protocol = "HTTP"
+                                 Port = 8080
+                              }
         }
     }
 }

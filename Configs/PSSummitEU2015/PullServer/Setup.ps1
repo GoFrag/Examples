@@ -1,4 +1,12 @@
-﻿$cred = Import-Clixml -Path C:\DemoScripts\PullServer\Admin.xml
+﻿#############################################################
+# PowerShell Summit Europe 2015 Pull Server version 2 Demo
+# 
+# This script is used to setup VM environment for Pull Demo's
+#
+#############################################################
+
+
+$cred = Import-Clixml -Path C:\DemoScripts\PullServer\Admin.xml
 
 #Prep local machine
     Write-Host "Starting configuration of Local Machine."
