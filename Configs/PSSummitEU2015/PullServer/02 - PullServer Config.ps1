@@ -39,8 +39,6 @@ Configuration V2PullServer
         }
 
         #Install WebApp for managing Configurations / resources
-        
-        
         File AdminSite
         {
             Ensure = 'Present'

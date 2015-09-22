@@ -4,7 +4,7 @@
     Import-DscResource -ModuleName xWebAdministration
 
     #File Server Config
-    Node $AllNodes.Where($_.Role -eq 'FileServer').NodeName
+    Node $AllNodes.NodeName
     {
         WindowsFeature FileAndISCSI
         {
@@ -64,44 +64,7 @@
             EncryptData = $true
         }
     }
-
-    # WebServer config
-    Node $AllNodes.Where($_.Role -eq 'WebFrontEndServer').NodeName
-    {
-        WindowsFeature WebServer
-        {
-            Ensure = 'Present'
-            Name = 'Web-Server'
-        }
-
-        File PublicSite
-        {
-            Ensure = 'Present'
-            Type = 'Directory'
-            DestinationPath = 'c:\inetpub\fabricam'
-        }
-
-        xWebAppPool FabricamPublic
-        {
-            Ensure = 'Present'
-            Name = 'Public'
-            State = 'Started'
-        }
-
-        xWebsite FabricamPublic
-        {
-            Ensure = 'Present'
-            Name = 'Fabricam.com'
-            PhysicalPath = 'c:\inetpub\fabricam'
-            State = 'Started'
-            ApplicationPool = 'Public'
-            BindingInfo = MSFT_xWebBindingInformation
-                             {
-                               Protocol = "HTTP"
-                               Port = 8080
-                             }
-        }
-    }
+   
 }
 
 Basic -ConfigurationData "$PSScriptRoot\TargetNodeConfigData.psd1" -OutputPath 'C:\Demos\PSSummitEurope2015\MOF\V1' -Verbose

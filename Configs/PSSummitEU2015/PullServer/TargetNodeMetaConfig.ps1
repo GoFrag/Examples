@@ -2,6 +2,7 @@
 [DscLocalConfigurationManager()]
 Configuration MetaConfig
 {
+    
     Settings
     {
         RefreshMode = 'Pull'

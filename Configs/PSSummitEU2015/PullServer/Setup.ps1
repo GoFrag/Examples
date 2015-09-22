@@ -1,9 +1,9 @@
-﻿$cred = Import-Clixml -Path C:\demos\PSSummitEurope2015\Admin.xml
+﻿$cred = Import-Clixml -Path C:\DemoScripts\PullServer\Admin.xml
 
 #Prep local machine
     Write-Host "Starting configuration of Local Machine."
-    New-NetIPAddress -IPAddress '10.0.0.1' -PrefixLength 24 -InterfaceAlias 'vEthernet (DemoNet)' -AddressFamily IPv4
-    "`r`n10.0.0.10`tcorp.fabricam.com" | Out-File -FilePath 'c:\windows\system32\drivers\etc\hosts' -Encoding ascii -Append
+    #New-NetIPAddress -IPAddress '10.0.0.1' -PrefixLength 24 -InterfaceAlias 'vEthernet (DemoNet)' -AddressFamily IPv4
+    #"`r`n10.0.0.10`tcorp.fabricam.com" | Out-File -FilePath 'c:\windows\system32\drivers\etc\hosts' -Encoding ascii -Append
     Write-Host "Completed: Local Machine setup"
 
 #Prep Pull Server
@@ -12,7 +12,7 @@
     dir $PSScriptRoot\Modules\ -Recurse -File | %{Copy-VMFile -Name Pull -SourcePath $_.FullName -DestinationPath $_.FullName -CreateFullPath -FileSource Host -Force}
     #dir $PSScriptRoot\site\ -Recurse -File | %{Copy-VMFile -Name Pull -SourcePath $_.FullName -DestinationPath $_.FullName -CreateFullPath -FileSource Host -Force}
     #Invoke-Command -VMName Pull -ScriptBlock{copy C:\Git\Examples\Configs\PSSummitEU2015\Site\* 'C:\inetpub\DscAdmin' -Recurse } -Credential $cred
-    Invoke-Command -VMName Pull -ScriptBlock{copy C:\Git\Examples\Configs\PSSummitEU2015\Modules\* 'C:\Program Files\WindowsPowerShell\Modules' -Recurse; del c:\git -Recurse} -Credential $cred #Use PowerShell direct to run a script on a VM.
+    Invoke-Command -VMName Pull -ScriptBlock{copy C:\DemoScripts\PullServer\Modules\* 'C:\Program Files\WindowsPowerShell\Modules' -Recurse; del c:\DemoScripts -Recurse} -Credential $cred #Use PowerShell direct to run a script on a VM.
 
     
     #Copy and install private SSL certificate

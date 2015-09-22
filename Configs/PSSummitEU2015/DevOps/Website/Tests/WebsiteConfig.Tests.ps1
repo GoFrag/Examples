@@ -1,8 +1,8 @@
-﻿#################################################################
+﻿####################################################################
 # Unit tests for WebsiteConfig
 #
-#
-#################################################################
+#Unit tests content of DSC configuration as well as the MOF output.
+####################################################################
 
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $parent = Split-Path -Parent $here
