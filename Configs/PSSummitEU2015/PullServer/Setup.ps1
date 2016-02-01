@@ -42,7 +42,7 @@ $cred = Import-Clixml -Path C:\DemoScripts\PullServer\Admin.xml
     Write-Host "   Completed: set hosts file"
 
     #Add Demo user
-    Invoke-Command -VMName Pull -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Demo");$user.SetPassword("Sd2-mmtp");$user.UserFlags = 64 + 65536;$user.SetInfo();$Admins = [ADSI]"WinNT://$env:computername/Administrators,group";$Admins.Add("WinNT://$env:computername/Demo,user");} -Credential $cred
+    Invoke-Command -VMName Pull -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Demo");$user.SetPassword("<PasswordHere>");$user.UserFlags = 64 + 65536;$user.SetInfo();$Admins = [ADSI]"WinNT://$env:computername/Administrators,group";$Admins.Add("WinNT://$env:computername/Demo,user");} -Credential $cred
     Write-Host "   Completed: created Demo user"
     Write-Host "Completed: Pull server setup"
 
@@ -67,9 +67,9 @@ $cred = Import-Clixml -Path C:\DemoScripts\PullServer\Admin.xml
     Write-Host "   Completed: set hosts file"
 
     #Add Demo users
-    Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Demo");$user.SetPassword("Sd2-mmtp");$user.UserFlags = 64 + 65536;$user.SetInfo();$Admins = [ADSI]"WinNT://$env:computername/Administrators,group";$Admins.Add("WinNT://$env:computername/Demo,user");} -Credential $cred
-    Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Employees");$user.SetPassword("Sd2-mmtp");$user.UserFlags = 64 + 65536;$user.SetInfo();} -Credential $cred
-    Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Managers");$user.SetPassword("Sd2-mmtp");$user.UserFlags = 64 + 65536;$user.SetInfo();} -Credential $cred
-    #Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Finance");$user.SetPassword("Sd2-mmtp");$user.UserFlags = 64 + 65536;$user.SetInfo();} -Credential $cred
+    Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Demo");$user.SetPassword("<PasswordHere>");$user.UserFlags = 64 + 65536;$user.SetInfo();$Admins = [ADSI]"WinNT://$env:computername/Administrators,group";$Admins.Add("WinNT://$env:computername/Demo,user");} -Credential $cred
+    Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Employees");$user.SetPassword("<PasswordHere>");$user.UserFlags = 64 + 65536;$user.SetInfo();} -Credential $cred
+    Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Managers");$user.SetPassword("<PasswordHere>");$user.UserFlags = 64 + 65536;$user.SetInfo();} -Credential $cred
+    #Invoke-Command -VMName Server -ScriptBlock {$CN = [ADSI]"WinNT://$env:computername";$user = $CN.Create("User","Finance");$user.SetPassword("<PasswordHere>");$user.UserFlags = 64 + 65536;$user.SetInfo();} -Credential $cred
     Write-Host "   Completed: created Demo user"
     Write-Host "Completed: Target server setup"
